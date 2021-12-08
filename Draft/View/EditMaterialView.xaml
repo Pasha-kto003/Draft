@@ -64,7 +64,7 @@
                 </Grid.RowDefinitions>
                 
             </Grid>
-            <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Сохранить" Command="{Binding Save}" HorizontalAlignment="Center" />
+            <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Сохранить" Command="{Binding SaveMaterial}" HorizontalAlignment="Center" />
         </Grid>
     </ScrollViewer>
 </Page>
