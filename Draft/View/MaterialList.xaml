@@ -36,13 +36,13 @@
                 <ComboBox Width="200" DisplayMemberPath="Name" ItemsSource="{Binding TypeFilter}" SelectedItem="{Binding SelectedTypeFilter}"/>
             </StackPanel>
         </Grid>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate >
                     <Grid Background="White" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding Image}" Width="100" Height="100" Grid.Column="0" HorizontalAlignment="Left"/>
@@ -61,6 +61,8 @@
                                 <Label Content="Поставщики: "/>
                                 <Label Content="{Binding Supplier}"/>
                             </StackPanel>
+
+
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
                             <Label Content="Остаток:"/>
@@ -69,8 +71,16 @@
                         </StackPanel>
 
                     </Grid>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить материал" Command="{Binding AddMaterial}"/>
+                    <MenuItem Header="Изменить материал" Command="{Binding EditMaterial}"/>
+                    <MenuItem Header="Удалить материал" Command="{Binding RemoveMaterial}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Label Content="{Binding SearchCountRows}"/>

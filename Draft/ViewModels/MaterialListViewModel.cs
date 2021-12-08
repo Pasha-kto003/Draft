@@ -1,4 +1,5 @@
 ﻿using Draft.db;
+using Draft.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,11 +72,19 @@ namespace Draft.ViewModels
             }
         }
 
+        public Material SelectedMaterial { get; set; }
+
+        
+
         public CustomCommand BackPage { get; set; }
         public CustomCommand ForwardPage { get; set; }
+        public CustomCommand AddMaterial { get; set; }
+        public CustomCommand EditMaterial { get; set; }
+        public CustomCommand RemoveMaterial { get; set; }
+
 
         List<Material> searchResult;
-        int paginationPageIndex = 1;
+        int paginationPageIndex = 0;
         private string searchCountRows;
         private string selectedViewCountRows;
         public MaterialListViewModel()
@@ -113,10 +122,20 @@ namespace Draft.ViewModels
                 Pagination();
 
             });
+
+            AddMaterial = new CustomCommand(() =>
+            {
+                MainWindow.Navigate(new EditMaterialView());
+            });
+            EditMaterial = new CustomCommand(() =>
+            {
+                if (SelectedMaterial == null)
+                    return;
+                MainWindow.Navigate(new EditMaterialView(SelectedMaterial));
+            });
             searchResult = DBInstance.Get().Material.ToList();
             InitPagination();
             Pagination();
-            SignalChanged("Materials");
         }
         private void InitPagination()
         {

@@ -17,15 +17,19 @@ using System.Windows.Shapes;
 namespace Draft.View
 {
     /// <summary>
-    /// Логика взаимодействия для MaterialList.xaml
+    /// Логика взаимодействия для EditMaterialView.xaml
     /// </summary>
-    public partial class MaterialList : Page
+    public partial class EditMaterialView : Page
     {
-        public MaterialList()
+        public EditMaterialView()
         {
             InitializeComponent();
-            DataContext = new MaterialListViewModel();
+            DataContext = new EditMaterialViewModel(null);
         }
-
+        public EditMaterialView(Material material)
+        {
+            InitializeComponent();
+            DataContext = new EditMaterialViewModel(material);
+        }
     }
 }
