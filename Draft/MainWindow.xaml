@@ -8,18 +8,27 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Image Source="" Grid.Column="3"/>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Image Grid.RowSpan="2" Width="100"/>
+            <Label Grid.Column="1" Grid.RowSpan="2" FontSize="50" Foreground="{StaticResource Attention}" Content="Черновик"/>
+            <Label Content="Навигация" VerticalAlignment="Bottom" Grid.Column="2"/>
+            <StackPanel  Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Button Content="Назад" Click="BackPage"/>
+                <Button Content="Вперед" Click="ForwardPage"/>
+            </StackPanel>
         </Grid>
+        <Frame Name="mainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

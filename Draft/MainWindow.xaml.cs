@@ -1,4 +1,5 @@
 ﻿using Draft.db;
+using Draft.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,10 +23,13 @@ namespace Draft
     /// </summary>
     public partial class MainWindow : Window
     {
+        static MainWindow window;
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
+            window = this;
+            Navigate(new MaterialList());
             //var connection = DBInstance.Get();
             //string path = @"C:\Users\79249\Desktop\Черновик\Сессия 1\materials_b_import.csv";
             //var rows = File.ReadAllLines(path);
@@ -75,20 +79,37 @@ namespace Draft
 
             //connection.SaveChanges();
 
-            var connection = DBInstance.Get();
-            string path = @"C:\Users\79249\Desktop\Черновик\Сессия 1\materialsupplier_b_import.csv";
-            var rows = File.ReadAllLines(path);
-            var supliers = connection.Supplier.ToList();
-            var materials = connection.Material.ToList();
+            //    var connection = DBInstance.Get();
+            //    string path = @"C:\Users\79249\Desktop\Черновик\Сессия 1\materialsupplier_b_import.csv";
+            //    var rows = File.ReadAllLines(path);
+            //    var supliers = connection.Supplier.ToList();
+            //    var materials = connection.Material.ToList();
 
-            for (int i = 1; i < rows.Length; i++)
-            {
-                var cols = rows[i].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                var material = materials.First(s => s.Title == cols[0]);
-                var suplier = supliers.First(s => s.Title == cols[1]);
-                suplier.Material.Add(material);
-            }
-            connection.SaveChanges();
+            //    for (int i = 1; i < rows.Length; i++)
+            //    {
+            //        var cols = rows[i].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            //        var material = materials.First(s => s.Title == cols[0]);
+            //        var suplier = supliers.First(s => s.Title == cols[1]);
+            //        suplier.Material.Add(material);
+            //    }
+            //    connection.SaveChanges();
+        }
+
+        public static void Navigate(Page page)
+        {
+            window.mainFrame.Navigate(page);
+        }
+
+        private void BackPage(object sender, RoutedEventArgs e)
+        {
+            if (mainFrame.CanGoBack)
+                mainFrame.GoBack();
+        }
+
+        private void ForwardPage(object sender, RoutedEventArgs e)
+        {
+            if (mainFrame.CanGoForward)
+                mainFrame.GoForward();
         }
     }
 }
