@@ -94,6 +94,17 @@ namespace Draft.ViewModels
                 Search();
             }
         }
+        private MaterialType selectedMaterialTypeFilter;
+        public List<MaterialType> MaterialTypeFilter { get; set; }
+        public MaterialType SelectedMaterialTypeFilter
+        {
+            get => selectedMaterialTypeFilter;
+            set
+            {
+                selectedMaterialTypeFilter = value;
+                Search();
+            }
+        }
 
         public List<string> SearchType { get; set; }
         private string selectedSearchType;
@@ -107,6 +118,19 @@ namespace Draft.ViewModels
             }
         }
 
+        public List<string> SortType { get; set; }
+        private string selectedSortType;
+        public string SelectedSortType
+        {
+            get => selectedSortType;
+
+            set
+            {
+                selectedSortType = value;
+                Sort();
+            }
+        }
+
         public Material SelectedMaterial { get; set; }
 
         
@@ -116,7 +140,7 @@ namespace Draft.ViewModels
         public CustomCommand AddMaterial { get; set; }
         public CustomCommand EditMaterial { get; set; }
         public CustomCommand RemoveMaterial { get; set; }
-
+        public CustomCommand Sortirovka { get; set; }
 
         List<Material> searchResult;
         int paginationPageIndex = 0;
@@ -135,6 +159,18 @@ namespace Draft.ViewModels
                 SignalChanged();
             }
         }
+
+        private string selectedOrderType;
+        public List<string> OrderType { get; set; }
+        public string SelectedOrderType
+        {
+            get => selectedOrderType;
+            set
+            {
+                selectedOrderType = value;
+                Sort();
+            }
+        }
         public MaterialListViewModel()
         {
             var connection = DBInstance.Get();
@@ -147,13 +183,22 @@ namespace Draft.ViewModels
             ViewCountRows.AddRange(new string[] { "15", "все" });
             selectedViewCountRows = ViewCountRows.First();
 
+            MaterialTypeFilter = DBInstance.Get().MaterialType.ToList();
+            MaterialTypeFilter.Add(new MaterialType { Title = "Все типы" });
+            selectedMaterialTypeFilter = MaterialTypeFilter.Last();
+
+            SortType = new List<string>();
+            SortType.AddRange(new string[] { "Наименование", "Количество на складе", "Отмена", "Стоимость", "Остаток" });
+            selectedSortType = SortType.First();
+
+            OrderType = new List<string>();
+            OrderType.AddRange(new string[] { "По возрастанию", "По убыванию", "По умолчанию" });
+            selectedOrderType = OrderType.Last();
+
             SearchType = new List<string>();
             SearchType.AddRange(new string[] { "Наименование", "Описание" });
             selectedSearchType = SearchType.First();
 
-            TypeFilter = DBInstance.Get().MaterialType.ToList();
-            TypeFilter.Add(new MaterialType { Title = "все"});
-            selectedTypeFilter = TypeFilter.Last();
 
             BackPage = new CustomCommand(() => {
                 if (searchResult == null)
@@ -189,10 +234,14 @@ namespace Draft.ViewModels
                     return;
                 MainWindow.Navigate(new EditMaterialView(SelectedMaterial));
             });
+            Sortirovka = new CustomCommand(() =>
+            {
+                Sort();
+            });
             searchResult = DBInstance.Get().Material.ToList();
             InitPagination();
             Pagination();
-            Search();
+
         }
         private void InitPagination()
         {
@@ -209,8 +258,7 @@ namespace Draft.ViewModels
             }
             else
             {
-                Materials = searchResult.Skip(rowsOnPage * paginationPageIndex)
-                    .Take(rowsOnPage).ToList();
+                Materials = searchResult.Skip(rowsOnPage * paginationPageIndex).Take(rowsOnPage).ToList();
                 SignalChanged("Materials");
                 int.TryParse(SelectedViewCountRows, out rows);
                 CountPages = searchResult.Count() / rows;
@@ -221,14 +269,56 @@ namespace Draft.ViewModels
         private void Search()
         {
             var search = SearchText.ToLower();
-            if (SelectedSearchType == "Наименование")
-                searchResult = DBInstance.Get().Material
-                    .Where(c =>c.Title.ToLower().Contains(search)).ToList();
-            else if (SelectedSearchType == "Описание")
-                searchResult = DBInstance.Get().Material
-                    .Where(c =>c.Description.ToLower().Contains(search)).ToList();
+            if (SelectedMaterialTypeFilter.Title == "Все типы")
+            {
+                if (SelectedSearchType == "Наименование")
+                    searchResult = DBInstance.Get().Material
+                        .Where(c => c.Title.ToLower().Contains(search)).ToList();
+                else if (SelectedSearchType == "Описание")
+                    searchResult = DBInstance.Get().Material
+                        .Where(c => c.Description.ToLower().Contains(search)).ToList();
+            }
+            else
+            {
+                if (SelectedSearchType == "Наименование")
+                    searchResult = DBInstance.Get().Material
+                        .Where(c => c.Title.ToLower().Contains(search) && c.MaterialType.Title.Contains(SelectedMaterialTypeFilter.Title)).ToList();
+                else if (SelectedSearchType == "Описание")
+                    searchResult = DBInstance.Get().Material
+                        .Where(c => c.Description.ToLower().Contains(search) && c.MaterialType.Title.Contains(SelectedMaterialTypeFilter.Title)).ToList();
+            }
+
+            Sort();
             InitPagination();
             Pagination();
+        }
+        internal void Sort()
+        {
+            if (SelectedOrderType == "По умолчанию")
+                return;
+
+            if (SelectedOrderType == "По убыванию")
+            {
+                if (SelectedSortType == "Наименование")
+                    searchResult.Sort((x, y) => y.Title.CompareTo(x.Title));
+                else if (SelectedSortType == "Остаток")
+                    searchResult.Sort((x, y) => ((Int32)x.CountInStock).CompareTo((Int32)x.CountInStock));
+                else if (SelectedSortType == "Стоимость")
+                    searchResult.Sort((x, y) => y.Cost.CompareTo(x.Cost));
+            }
+
+            if (SelectedOrderType == "По возрастанию")
+            {
+                if (SelectedSortType == "Наименование")
+                    searchResult.Sort((x, y) => x.Title.CompareTo(y.Title));
+                else if (SelectedSortType == "Остаток")
+                    searchResult.Sort((x, y) => ((Int32)x.CountInStock).CompareTo((Int32)y.CountInStock));
+                else if (SelectedSortType == "Стоимость")
+                    searchResult.Sort((x, y) => x.Cost.CompareTo(y.Cost));
+            }
+            paginationPageIndex = 0;
+            Pagination();
+
         }
     }
 }

@@ -79,7 +79,6 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="CustomCommand.cs" />
     <Compile Include="db\DBInstance.cs" />
-    <Compile Include="exten\Material.cs" />
     <Compile Include="Material.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
