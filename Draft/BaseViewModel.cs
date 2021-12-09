@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Draft
 {
-    public class BaseViewModel
+    public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

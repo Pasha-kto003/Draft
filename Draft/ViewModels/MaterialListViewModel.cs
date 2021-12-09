@@ -72,6 +72,41 @@ namespace Draft.ViewModels
             }
         }
 
+        private string searchText = "";
+        public string SearchText
+        {
+            get => searchText;
+            set
+            {
+                searchText = value;
+                Search();
+            }
+        }
+
+        private MaterialType selectedTypeFilter;
+        public List<MaterialType> TypeFilter { get; set; }
+        public MaterialType SelectedTypeFilter
+        {
+            get => selectedTypeFilter;
+            set
+            {
+                selectedTypeFilter = value;
+                Search();
+            }
+        }
+
+        public List<string> SearchType { get; set; }
+        private string selectedSearchType;
+        public string SelectedSearchType
+        {
+            get => selectedSearchType;
+            set
+            {
+                selectedSearchType = value;
+                Search();
+            }
+        }
+
         public Material SelectedMaterial { get; set; }
 
         
@@ -87,6 +122,19 @@ namespace Draft.ViewModels
         int paginationPageIndex = 0;
         private string searchCountRows;
         private string selectedViewCountRows;
+        public int rows = 0;
+        public int CountPages = 0;
+
+        private string pages;
+        public string Pages
+        {
+            get => pages;
+            set
+            {
+                pages = value;
+                SignalChanged();
+            }
+        }
         public MaterialListViewModel()
         {
             var connection = DBInstance.Get();
@@ -98,6 +146,14 @@ namespace Draft.ViewModels
             ViewCountRows = new List<string>();
             ViewCountRows.AddRange(new string[] { "15", "все" });
             selectedViewCountRows = ViewCountRows.First();
+
+            SearchType = new List<string>();
+            SearchType.AddRange(new string[] { "Наименование", "Описание" });
+            selectedSearchType = SearchType.First();
+
+            TypeFilter = DBInstance.Get().MaterialType.ToList();
+            TypeFilter.Add(new MaterialType { Title = "все"});
+            selectedTypeFilter = TypeFilter.Last();
 
             BackPage = new CustomCommand(() => {
                 if (searchResult == null)
@@ -136,6 +192,7 @@ namespace Draft.ViewModels
             searchResult = DBInstance.Get().Material.ToList();
             InitPagination();
             Pagination();
+            Search();
         }
         private void InitPagination()
         {
@@ -155,7 +212,23 @@ namespace Draft.ViewModels
                 Materials = searchResult.Skip(rowsOnPage * paginationPageIndex)
                     .Take(rowsOnPage).ToList();
                 SignalChanged("Materials");
+                int.TryParse(SelectedViewCountRows, out rows);
+                CountPages = searchResult.Count() / rows;
+                Pages = $"{paginationPageIndex + 1}/{CountPages + 1}";
             }
+        }
+
+        private void Search()
+        {
+            var search = SearchText.ToLower();
+            if (SelectedSearchType == "Наименование")
+                searchResult = DBInstance.Get().Material
+                    .Where(c =>c.Title.ToLower().Contains(search)).ToList();
+            else if (SelectedSearchType == "Описание")
+                searchResult = DBInstance.Get().Material
+                    .Where(c =>c.Description.ToLower().Contains(search)).ToList();
+            InitPagination();
+            Pagination();
         }
     }
 }

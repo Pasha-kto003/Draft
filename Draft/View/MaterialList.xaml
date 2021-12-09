@@ -12,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid>
@@ -26,6 +26,10 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <Label Content="Поиск:"/>
                 <Label Grid.Column="1" Content="Критерий поиска:"/>
                 <TextBox Width="200" Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
@@ -85,8 +89,9 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Label Content="{Binding SearchCountRows}"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Предыдущая страница" Width="180" Command="{Binding BackPage}"/>
-                <Button Content="Следующая страница" Width="180" Command="{Binding ForwardPage}"/>
+                <Button Content="&lt;" Width="20" Command="{Binding BackPage}"/>
+                <Label Content="{Binding Pages}"/>
+                <Button Content=">" Width="20" Command="{Binding ForwardPage}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
                 <Label Content="Кол-во записей на странице:"/>

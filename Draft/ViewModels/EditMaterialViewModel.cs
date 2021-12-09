@@ -34,7 +34,7 @@ namespace Draft.ViewModels
                     Cost = material.Cost,
                     Unit = material.Unit,
                 };
-                
+                ImageMaterial = GetImageFromPath(Environment.CurrentDirectory + "//" + EditMaterial.Image);
             }
             SelectImage = new CustomCommand(() =>
             {
@@ -44,11 +44,6 @@ namespace Draft.ViewModels
                     try
                     {
                         var info = new FileInfo(ofd.FileName);
-                        if (info.Length > 2 * 1024 * 1024)
-                        {
-                            MessageBox.Show("Размер фото не должен превышать 2МБ");
-                            return;
-                        }
                         ImageMaterial = GetImageFromPath(ofd.FileName);
                         EditMaterial.Image = $"/materials/{info.Name}";
                         var newPath = Environment.CurrentDirectory + EditMaterial.Image;

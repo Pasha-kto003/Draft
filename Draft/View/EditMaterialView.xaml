@@ -47,7 +47,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Content="Фото клиента" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+                <Label Content="Фото материала" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
                 <Image Grid.Row="1"  Source="{Binding Image}" Height="200"/>
                 <Button Grid.Row="2" Command="{Binding SelectImage}" Content="Выбрать изображение" VerticalAlignment="Top" HorizontalAlignment="Center" />
 
