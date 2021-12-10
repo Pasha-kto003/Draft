@@ -131,6 +131,32 @@ namespace Draft.ViewModels
             }
         }
 
+        private string stringSupplier;
+
+        public string SrtingSupplier
+        {
+            get => stringSupplier;
+
+            set 
+            {
+                stringSupplier = value;
+                SignalChanged();
+            }
+        }
+
+        private string colorForXaml;
+
+        public string ColorForXaml
+        {
+            get => colorForXaml;
+
+            set
+            {
+                colorForXaml = value;
+                SignalChanged();
+            }
+        }
+
         public Material SelectedMaterial { get; set; }
 
         
@@ -141,6 +167,7 @@ namespace Draft.ViewModels
         public CustomCommand EditMaterial { get; set; }
         public CustomCommand RemoveMaterial { get; set; }
         public CustomCommand Sortirovka { get; set; }
+        public CustomCommand EditMinCount { get; set; }
 
         List<Material> searchResult;
         int paginationPageIndex = 0;
@@ -159,6 +186,8 @@ namespace Draft.ViewModels
                 SignalChanged();
             }
         }
+
+        public List<Material> SelectedMaterials { get; set; }
 
         private string selectedOrderType;
         public List<string> OrderType { get; set; }
@@ -199,6 +228,26 @@ namespace Draft.ViewModels
             SearchType.AddRange(new string[] { "Наименование", "Описание" });
             selectedSearchType = SearchType.First();
 
+            foreach (var material in Materials)
+            {
+                if(material.CountInStock < material.MinCount)
+                {
+                    material.ColorForXaml = "#f19292";
+                }
+
+                else if(material.CountInStock > material.MinCount * 3)
+                {
+                    material.ColorForXaml = "#ffba01";
+                }
+                
+                foreach (var suplier in material.Supplier)
+                {
+                    material.SrtingSupplier = "";
+                    if (suplier != material.Supplier.Last())
+                        material.SrtingSupplier += $"{suplier.Title}, ";
+                    material.SrtingSupplier += $"{suplier.Title}";
+                }
+            }
 
             BackPage = new CustomCommand(() => {
                 if (searchResult == null)
@@ -224,6 +273,12 @@ namespace Draft.ViewModels
 
             });
 
+            EditMinCount = new CustomCommand(() =>
+            {
+                EditCount modalWindow = new EditCount(SelectedMaterials);
+                modalWindow.ShowDialog();
+            });
+
             AddMaterial = new CustomCommand(() =>
             {
                 MainWindow.Navigate(new EditMaterialView());
@@ -243,6 +298,7 @@ namespace Draft.ViewModels
             Pagination();
 
         }
+
         private void InitPagination()
         {
             SearchCountRows = $"Найдено записей: {searchResult.Count} из {DBInstance.Get().Material.Count()}";
@@ -264,6 +320,12 @@ namespace Draft.ViewModels
                 CountPages = searchResult.Count() / rows;
                 Pages = $"{paginationPageIndex + 1}/{CountPages + 1}";
             }
+        }
+
+        public MaterialListViewModel(List<Material> materials) : this()
+        {
+            EditCount modalWindow = new EditCount(materials);
+            modalWindow.ShowDialog();
         }
 
         private void Search()

@@ -51,17 +51,17 @@
                 <ComboBox Width="200" ItemsSource="{Binding OrderType}" SelectedItem="{Binding SelectedOrderType}"/>
             </StackPanel>
         </Grid>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
+        <ListBox SelectionMode="Extended" x:Name="list" Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
             <ListBox.ItemTemplate>
                 <DataTemplate >
-                    <Grid Background="White" >
+                    <Grid Background="{Binding ColorForXaml}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding Image}" Width="100" Height="100" Grid.Column="0" HorizontalAlignment="Left"/>
-                        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center">
+                        <StackPanel  Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{Binding MaterialType.Title}"/>
                                 <Label Content="|"/>
@@ -77,7 +77,7 @@
 
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="Поставщики: "/>
-                                <Label Content="{Binding Supplier}"/>
+                                <Label Content="{Binding SrtingSupplier}"/>
                             </StackPanel>
 
 
@@ -97,6 +97,7 @@
                     <MenuItem Header="Добавить материал" Command="{Binding AddMaterial}"/>
                     <MenuItem Header="Изменить материал" Command="{Binding EditMaterial}"/>
                     <MenuItem Header="Удалить материал" Command="{Binding RemoveMaterial}"/>
+                    <MenuItem Header="Изменить Минимальное значение выбранных материалов" Click="MenuItem_Click"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
