@@ -28,7 +28,10 @@ namespace Draft.ViewModels
         }
         List<Supplier> searchResult;
 
-        
+        public int NeedToStore { get; set; }
+        public string Unit { get; set; }
+        public int MinCountToBuy { get; set; }
+        public decimal MinCountCost { get; set; }
 
         public Supplier SelectedMaterialSupplier { get; set; }
         private ObservableCollection<Supplier> selectedMaterialSuppliers = new ObservableCollection<Supplier>();
@@ -43,6 +46,8 @@ namespace Draft.ViewModels
         }
 
         public Material AddMaterialVM { get; set; }
+        public int CountPart { get; set; }
+
 
         public Supplier SelectedSupplier { get; set; }
         private List<Supplier> supplier;
@@ -60,10 +65,16 @@ namespace Draft.ViewModels
         public List<MaterialType> MaterialTypes { get; set; }
         public MaterialType SelectedMaterialType { get; set; }
 
+        public List<ProductMaterial> ProductMaterials;
+        public List<MaterialCountHistory> MaterialCountHistorys;
+        public List<Supplier> Suppliers;
+
         public CustomCommand SelectImage { get; set; }
         public CustomCommand RemoveSupplier { get; set; }
         public CustomCommand AddSupplier { get; set; }
         public CustomCommand Save { get; set; }
+        public CustomCommand RemoveMaterial { get; set; }
+        public CustomCommand CountSum { get; set; }
 
 
         public AddMaterial(Material material)
@@ -71,6 +82,8 @@ namespace Draft.ViewModels
             var connection = DBInstance.Get();
             Supplier = connection.Supplier.ToList();
             MaterialTypes = connection.MaterialType.ToList();
+
+            
 
             if (material == null)
             {
@@ -95,11 +108,103 @@ namespace Draft.ViewModels
                     Description = material.Description,
                     Unit = material.Unit,
                 };
+
+                if(material.CountInStock < material.MinCount)
+                {
+                    NeedToStore = (int)(material.MinCount - material.CountInStock);
+                    Unit = material.Unit;
+                    if(NeedToStore % material.CountInPack == 0)
+                    {
+                        MinCountToBuy = NeedToStore / (int)material.CountInPack;
+                    }
+                    else
+                    {
+                        MinCountToBuy = NeedToStore / (int)material.CountInPack + 1;
+                    }
+                    MinCountCost = (int)MinCountToBuy * material.Cost;
+                }
+
                 if (material.Supplier != null)
                 {
                     SelectedMaterialSuppliers = new ObservableCollection<Supplier>(material.Supplier);
                 }
             }
+
+            RemoveMaterial = new CustomCommand(() =>
+            {
+                if (material.ID == 0)
+                {
+                    MessageBox.Show("Текущая запись не создана", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить материал?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ProductMaterials = new List<ProductMaterial>(connection.ProductMaterial);
+                    foreach (ProductMaterial promat in ProductMaterials)
+                    {
+                        if (promat.Material == material || promat.MaterialID == material.ID)
+                        {
+                            MessageBox.Show("Удаление невозможно, материал используется на производстве!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                    MaterialCountHistorys = new List<MaterialCountHistory>(connection.MaterialCountHistory);
+                    foreach (MaterialCountHistory materialCountHistorie in MaterialCountHistorys)
+                    {
+                        if (materialCountHistorie.Material == material || materialCountHistorie.MaterialID == material.ID)
+                        {
+                            try
+                            {
+                                DBInstance.Get().MaterialCountHistory.Remove(materialCountHistorie);
+
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.Message);
+                            }
+
+                        }
+                    }
+                    Suppliers = new List<Supplier>(connection.Supplier);
+                    foreach (Supplier sup in Suppliers)
+                    {
+                        if (sup.Material == material)
+                        {
+                            try
+                            {
+                                DBInstance.Get().Supplier.Remove(sup);
+
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.Message);
+                            }
+
+                        }
+                    }
+                    try
+                    {
+                        DBInstance.Get().Material.Remove(material);
+                        DBInstance.Get().SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+
+                        MessageBox.Show(e.Message);
+                    }
+
+
+                    foreach (Window window in Application.Current.Windows)
+                    {
+                        if (window.DataContext == this)
+                        {
+                            CloseModalWindow(window);
+                        }
+                    }
+                }
+                else return;
+            });
             SelectedMaterialType = AddMaterialVM.MaterialType;
             string directory = Environment.CurrentDirectory;
             ImageMaterial = GetImageFromPath(directory.Substring(0, directory.Length - 10) + "\\" + AddMaterialVM.Image);
@@ -122,6 +227,23 @@ namespace Draft.ViewModels
                     }
                 }
             });
+
+
+            //CountSum = new CustomCommand(() =>
+            //{
+            //    if(material.CountInStock < material.MinCount)
+            //    {
+            //        int a = (Int32)material.MinCount - (Int32)material.CountInStock;
+            //        if (a < 0)
+            //            return;
+            //        else
+            //        {
+            //            int b = a * (Int32)material.Cost / (Int32)material.CountInPack;
+            //            CountPart = b;
+            //        }
+            //    }
+            //});
+            
 
             AddSupplier = new CustomCommand(() =>
             {
@@ -201,6 +323,7 @@ namespace Draft.ViewModels
             img.EndInit();
             return img;
         }
+
 
 
         public void CloseModalWindow(object obj)

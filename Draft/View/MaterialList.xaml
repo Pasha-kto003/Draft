@@ -21,6 +21,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+
             </Grid.ColumnDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -50,7 +52,7 @@
                 <!--<Button Command="{Binding Sortirovka}" Content="Сортировать"/>-->
                 <ComboBox Width="200" ItemsSource="{Binding OrderType}" SelectedItem="{Binding SelectedOrderType}"/>
             </StackPanel>
-            <Button Grid.Column="3" Content="Добавить материал" Command="{Binding AddMaterial}"/>
+            <Button  Grid.Column="4" Content="Добавить материал" Command="{Binding AddMaterial}"/>
         </Grid>
         <ListBox SelectionMode="Extended" x:Name="list" Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
             <ListBox.ItemTemplate>

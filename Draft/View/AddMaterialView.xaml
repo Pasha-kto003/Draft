@@ -38,11 +38,18 @@
                 <TextBox Text="{Binding MinCount}"/>
                 <Label Content="Стоимость за единицу:"/>
                 <TextBox Text="{Binding Cost}"/>
+                <Label Content="Описание"/>
+                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Description}"/>
             </StackPanel>
 
 
         </StackPanel>
-
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Label Content="Рассчитать стоимость партии"/>
+            <Label Content="{Binding CountPart}"/>
+            <Button  Content="Рассчитать" Command="{Binding CountSum}"/>
+            <Button Content="Удалить материал" Command="{Binding RemoveMaterial}"/>
+        </StackPanel>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Row="1" >
             <StackPanel Width="200">
                 <Label Content="Тип материала:"/>
@@ -53,6 +60,7 @@
                 <Image Source="{Binding ImageMaterial}" Width="150" Height="150"/>
                 <Button Content="Выбрать изображение" Command="{Binding SelectImage}"/>
             </StackPanel>
+           
         </StackPanel>
         <StackPanel Grid.Column="2">
             <Label Content="Поставщики с материалом:" Height="30"/>
@@ -63,7 +71,22 @@
         <StackPanel Grid.Column="3" Grid.Row="0">
             <Label Content="Все поставщики"/>
             <ComboBox ItemsSource="{Binding Supplier}" SelectedItem="{Binding SelectedSupplier}" DisplayMemberPath="Title" MaxWidth="250"/>
-            
+            <StackPanel Grid.Row="1" Grid.Column="3">
+                <Label Content="Необходимые затараты на пополнение:"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Нужно для пополнения:"/>
+                    <Label Content="{Binding NeedToStore}" Width="auto"/>
+                    <Label Content="{Binding Unit}" Width="auto"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Минимальный объём закупки:"/>
+                    <Label Content="{Binding MinCountToBuy}" Width="80"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Стоимость закупки"/>
+                    <Label Content="{Binding MinCountCost}" Width="80"/>
+                </StackPanel>
+            </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="100" Content="Добавить" Margin="0 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding AddSupplier}"/>
                 <Button Width="100" Content="Убрать" Margin="10 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding RemoveSupplier}"/>
