@@ -136,12 +136,12 @@ namespace Draft.ViewModels
             {
                 if (SelectedSupplier == null)
                 {
-                    MessageBox.Show("Нужно выбрать поставщика из выпадающего !", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Выберите поставщика!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 else if (SelectedMaterialSuppliers.Contains(SelectedSupplier))
                 {
-                    MessageBox.Show("Материал уже содержит выбранный элемент!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Этот поставщик уже есть!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
