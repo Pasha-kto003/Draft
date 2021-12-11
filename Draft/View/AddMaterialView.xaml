@@ -39,7 +39,7 @@
                 <Label Content="Стоимость за единицу:"/>
                 <TextBox Text="{Binding Cost}"/>
                 <Label Content="Описание"/>
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Description}"/>
+                <TextBox MaxHeight="230" MaxWidth="150" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Description}"/>
             </StackPanel>
 
 

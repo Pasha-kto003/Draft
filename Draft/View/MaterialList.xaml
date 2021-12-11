@@ -52,7 +52,6 @@
                 <!--<Button Command="{Binding Sortirovka}" Content="Сортировать"/>-->
                 <ComboBox Width="200" ItemsSource="{Binding OrderType}" SelectedItem="{Binding SelectedOrderType}"/>
             </StackPanel>
-            <Button  Grid.Column="4" Content="Добавить материал" Command="{Binding AddMaterial}"/>
         </Grid>
         <ListBox SelectionMode="Extended" x:Name="list" Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
             <ListBox.ItemTemplate>
@@ -113,6 +112,8 @@
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
                 <Label Content="Кол-во записей на странице:"/>
                 <ComboBox Width="200" ItemsSource="{Binding ViewCountRows}" SelectedItem="{Binding SelectedViewCountRows}"/>
+                <Button Content="Добавить материал" Command="{Binding AddMaterial}"/>
+
             </StackPanel>
         </StackPanel>
 
