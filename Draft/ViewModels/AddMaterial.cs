@@ -186,7 +186,7 @@ namespace Draft.ViewModels
                     {
                         if (window.DataContext == this)
                         {
-                            CloseWin(window);
+                            CloseModalWindow(window);
                         }
                     }
 
@@ -220,10 +220,10 @@ namespace Draft.ViewModels
             SignalChanged("Supplier");
         }
 
-        public void CloseWin(object obj)
+        public void CloseModalWindow(object obj)
         {
-            Window win = obj as Window;
-            win.Close();
+            Window window = obj as Window;
+            window.Close();
         }
     }
 }
