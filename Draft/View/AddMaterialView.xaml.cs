@@ -11,25 +11,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Draft.View
 {
     /// <summary>
-    /// Логика взаимодействия для EditMaterialView.xaml
+    /// Логика взаимодействия для AddMaterial.xaml
     /// </summary>
-    public partial class EditMaterialView : Page
+    public partial class AddMaterialView : Window
     {
-        public EditMaterialView()
+        public AddMaterialView()
         {
             InitializeComponent();
-            DataContext = new EditMaterialViewModel(null);
+            DataContext = new AddMaterial(null);
         }
-        public EditMaterialView(Material material)
+        public AddMaterialView(Material material)
         {
             InitializeComponent();
-            DataContext = new EditMaterialViewModel(material);
+            DataContext = new AddMaterial(material);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //this.Close();
         }
     }
 }

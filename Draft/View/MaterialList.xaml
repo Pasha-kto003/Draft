@@ -50,6 +50,7 @@
                 <!--<Button Command="{Binding Sortirovka}" Content="Сортировать"/>-->
                 <ComboBox Width="200" ItemsSource="{Binding OrderType}" SelectedItem="{Binding SelectedOrderType}"/>
             </StackPanel>
+            <Button Grid.Column="3" Content="Добавить материал" Command="{Binding AddMaterial}"/>
         </Grid>
         <ListBox SelectionMode="Extended" x:Name="list" Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
             <ListBox.ItemTemplate>
@@ -94,9 +95,8 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Добавить материал" Command="{Binding AddMaterial}"/>
+                    <Button Content="Изменить материал" Command="{Binding EditMaterial}"/>
                     <MenuItem Header="Изменить материал" Command="{Binding EditMaterial}"/>
-                    <MenuItem Header="Удалить материал" Command="{Binding RemoveMaterial}"/>
                     <MenuItem Header="Изменить Минимальное значение выбранных материалов" Click="MenuItem_Click"/>
                 </ContextMenu>
             </ListBox.ContextMenu>

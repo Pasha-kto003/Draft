@@ -281,13 +281,21 @@ namespace Draft.ViewModels
 
             AddMaterial = new CustomCommand(() =>
             {
-                MainWindow.Navigate(new EditMaterialView());
+                AddMaterialView addMaterial = new AddMaterialView();
+                addMaterial.ShowDialog();
+                LoadEntities();
+                InitPagination();
+                Pagination();
             });
+
             EditMaterial = new CustomCommand(() =>
             {
-                if (SelectedMaterial == null)
-                    return;
-                MainWindow.Navigate(new EditMaterialView(SelectedMaterial));
+                if (SelectedMaterial == null) return;
+                AddMaterialView addMaterial = new AddMaterialView(SelectedMaterial);
+                addMaterial.ShowDialog();
+                LoadEntities();
+                InitPagination();
+                Pagination();
             });
             Sortirovka = new CustomCommand(() =>
             {
@@ -319,6 +327,33 @@ namespace Draft.ViewModels
                 int.TryParse(SelectedViewCountRows, out rows);
                 CountPages = searchResult.Count() / rows;
                 Pages = $"{paginationPageIndex + 1}/{CountPages + 1}";
+            }
+        }
+
+        public void LoadEntities()
+        {
+            Materials = new List<Material>(DBInstance.Get().Material.ToList());
+            MaterialTypes = new List<MaterialType>(DBInstance.Get().MaterialType.ToList());
+            Suppliers = new List<Supplier>(DBInstance.Get().Supplier.ToList());
+            foreach (var mat in Materials)
+            {
+
+                if (mat.CountInStock < mat.MinCount)
+                {
+                    mat.ColorForXaml = "#f19292";
+                }
+                else if (mat.CountInStock > mat.MinCount * 3)
+                {
+                    mat.ColorForXaml = "#ffba01";
+                }
+                mat.SrtingSupplier = "";
+                foreach (var sup in mat.Supplier)
+                {
+                    if (sup != mat.Supplier.Last())
+                        mat.SrtingSupplier += $"{sup.Title}, ";
+                    else
+                        mat.SrtingSupplier += $"{sup.Title}";
+                }
             }
         }
 
