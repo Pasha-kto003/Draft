@@ -242,7 +242,7 @@ namespace Draft.ViewModels
                 
                 foreach (var suplier in material.Supplier)
                 {
-                    material.SrtingSupplier = "";
+                   
                     if (suplier != material.Supplier.Last())
                         material.SrtingSupplier += $"{suplier.Title}, ";
                     material.SrtingSupplier += $"{suplier.Title}";

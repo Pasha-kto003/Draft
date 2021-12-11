@@ -39,7 +39,9 @@
                 <Label Content="Стоимость за единицу:"/>
                 <TextBox Text="{Binding Cost}"/>
                 <Label Content="Описание"/>
-                <TextBox MaxHeight="230" MaxWidth="150" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Description}"/>
+                <StackPanel Grid.ColumnSpan="2">
+                    <TextBox MaxHeight="230" MaxWidth="150" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Description}"/>
+                </StackPanel>
             </StackPanel>
 
 
@@ -63,7 +65,8 @@
            
         </StackPanel>
         <StackPanel Grid.Column="2">
-            <Label Content="Поставщики с материалом:" Height="30"/>
+            <Label Content="Поиск поставщиков"/>
+            <TextBox Width="200" Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             <ListBox Height="170" ItemsSource="{Binding SelectedMaterialSuppliers}" SelectedItem="{Binding SelectedMaterialSupplier}" DisplayMemberPath="Title">
 
             </ListBox>

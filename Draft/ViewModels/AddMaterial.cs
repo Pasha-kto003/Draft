@@ -76,6 +76,16 @@ namespace Draft.ViewModels
         public CustomCommand RemoveMaterial { get; set; }
         public CustomCommand CountSum { get; set; }
 
+        private string searchText = "";
+        public string SearchText
+        {
+            get => searchText;
+            set
+            {
+                searchText = value;
+                Search();
+            }
+        }
 
         public AddMaterial(Material material)
         {
@@ -245,6 +255,7 @@ namespace Draft.ViewModels
             //});
             
 
+
             AddSupplier = new CustomCommand(() =>
             {
                 if (SelectedSupplier == null)
@@ -324,7 +335,11 @@ namespace Draft.ViewModels
             return img;
         }
 
-
+        private void Search()
+        {
+            var search = SearchText.ToLower();
+            searchResult = SelectedMaterialSuppliers.Where(c => c.Title.ToLower().Contains(search)).ToList();
+        }
 
         public void CloseModalWindow(object obj)
         {
