@@ -14,16 +14,7 @@ namespace Draft.ViewModels
 {
     public class AddMaterial : BaseViewModel
     {
-        private string searchText = "";
-        public string SearchText
-        {
-            get => searchText;
-            set
-            {
-                searchText = value;
-                Search();
-            }
-        }
+       
 
         private BitmapImage imageMaterial;
         public BitmapImage ImageMaterial
@@ -211,14 +202,6 @@ namespace Draft.ViewModels
             return img;
         }
 
-        private void Search()
-        {
-            var search = SearchText.ToLower();
-            searchResult = DBInstance.Get().Supplier
-                        .Where(c => c.Title.ToLower().Contains(search)).ToList();
-            Supplier = searchResult;
-            SignalChanged("Supplier");
-        }
 
         public void CloseModalWindow(object obj)
         {

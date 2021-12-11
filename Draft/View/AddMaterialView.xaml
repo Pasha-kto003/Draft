@@ -59,13 +59,13 @@
             </ListBox>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Поиск"/>
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="163"/>
-            </StackPanel>
+            <Label Content="Все поставщики"/>
             <ComboBox ItemsSource="{Binding Supplier}" SelectedItem="{Binding SelectedSupplier}" DisplayMemberPath="Title"/>
-            <Button Width="100" Content="Добавить" Margin="0 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding AddSupplier}"/>
-            <Button Width="100" Content="Убрать" Height="30" VerticalAlignment="Bottom" Command="{Binding RemoveSupplier}"/>
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Width="100" Content="Добавить" Margin="0 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding AddSupplier}"/>
+                <Button Width="100" Content="Убрать" Margin="10 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding RemoveSupplier}"/>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
             <Button  Content="Отмена" HorizontalAlignment="Left" Click="Button_Click"/>
