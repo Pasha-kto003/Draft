@@ -136,7 +136,7 @@ namespace Draft.ViewModels
             {
                 if (SelectedSupplier == null)
                 {
-                    MessageBox.Show("Нужно выбрать поставщика из выпадающего списка!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Нужно выбрать поставщика из выпадающего !", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 else if (SelectedMaterialSuppliers.Contains(SelectedSupplier))
