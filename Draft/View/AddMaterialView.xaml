@@ -20,6 +20,8 @@
         </Grid.RowDefinitions>
         <StackPanel DataContext="{Binding AddMaterialVM}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <StackPanel HorizontalAlignment="Left">
+                <Label Content="Номер материала"/>
+               
                 <Label Content="Наименование:" />
                 <TextBox Text="{Binding Title}"/>
 
@@ -28,7 +30,8 @@
                 <Label Content="Единица измерения:"/>
                 <TextBox Text="{Binding Unit}"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" >
+            <StackPanel Grid.Column="1">
+                <Label Content="{Binding ID}" HorizontalAlignment="Stretch"/>
                 <Label Content="Количество в упаковке:"/>
                 <TextBox Text="{Binding CountInPack}"/>
                 <Label Content="Минимальное количество:"/>
@@ -40,29 +43,28 @@
 
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Row="1" >
-
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Row="1" >
             <StackPanel Width="200">
                 <Label Content="Тип материала:"/>
                 <ComboBox ItemsSource="{Binding MaterialTypes}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedMaterialType}"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <Label Content="Фото:"/>
+                <Label Content="Изображение:"/>
                 <Image Source="{Binding ImageMaterial}" Width="150" Height="150"/>
                 <Button Content="Выбрать изображение" Command="{Binding SelectImage}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="2">
-            <Label Content="Возможные поставщики:" Height="30"/>
+            <Label Content="Поставщики с материалом:" Height="30"/>
             <ListBox Height="170" ItemsSource="{Binding SelectedMaterialSuppliers}" SelectedItem="{Binding SelectedMaterialSupplier}" DisplayMemberPath="Title">
 
             </ListBox>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.Row="0">
             <Label Content="Все поставщики"/>
-            <ComboBox ItemsSource="{Binding Supplier}" SelectedItem="{Binding SelectedSupplier}" DisplayMemberPath="Title"/>
+            <ComboBox ItemsSource="{Binding Supplier}" SelectedItem="{Binding SelectedSupplier}" DisplayMemberPath="Title" MaxWidth="250"/>
             
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="100" Content="Добавить" Margin="0 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding AddSupplier}"/>
                 <Button Width="100" Content="Убрать" Margin="10 70 0 0" Height="30" VerticalAlignment="Bottom" Command="{Binding RemoveSupplier}"/>
             </StackPanel>
