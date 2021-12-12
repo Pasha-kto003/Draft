@@ -247,6 +247,8 @@ namespace Draft.ViewModels
                         material.SrtingSupplier += $"{suplier.Title}, ";
                     material.SrtingSupplier += $"{suplier.Title}";
                 }
+
+                
             }
 
             BackPage = new CustomCommand(() => {

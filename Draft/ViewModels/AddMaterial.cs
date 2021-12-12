@@ -101,6 +101,7 @@ namespace Draft.ViewModels
             }
             else
             {
+
                 AddMaterialVM = new Material
                 {
                     ID = material.ID,
@@ -117,9 +118,13 @@ namespace Draft.ViewModels
                     Image = material.Image,
                     Description = material.Description,
                     Unit = material.Unit,
+
                 };
 
-                if(material.CountInStock < material.MinCount)
+                
+
+
+                if (material.CountInStock < material.MinCount)
                 {
                     NeedToStore = (int)(material.MinCount - material.CountInStock);
                     Unit = material.Unit;
@@ -133,6 +138,7 @@ namespace Draft.ViewModels
                     }
                     MinCountCost = (int)MinCountToBuy * material.Cost;
                 }
+                
 
                 if (material.Supplier != null)
                 {
@@ -275,6 +281,7 @@ namespace Draft.ViewModels
 
             });
 
+            
             RemoveSupplier = new CustomCommand(() =>
             {
                 if (SelectedSupplier == null)
@@ -292,9 +299,29 @@ namespace Draft.ViewModels
 
             Save = new CustomCommand(() =>
             {
-
+                
                 try
                 {
+                    if (AddMaterialVM.CountInPack < 0)
+                    {
+                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        return;
+                    }
+                    else if (AddMaterialVM.CountInStock < 0)
+                    {
+                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        return;
+                    }
+                    else if (AddMaterialVM.Cost < 0)
+                    {
+                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        return;
+                    }
+                    else if (AddMaterialVM.MinCount < 0)
+                    {
+                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        return;
+                    }
                     AddMaterialVM.Supplier = SelectedMaterialSuppliers;
                     if (AddMaterialVM.ID == 0)
                         connection.Material.Add(AddMaterialVM);
