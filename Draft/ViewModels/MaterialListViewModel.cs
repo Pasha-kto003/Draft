@@ -2,14 +2,17 @@
 using Draft.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Draft.ViewModels
 {
     public class MaterialListViewModel : BaseViewModel
     {
+        string path = @"\NewDoc";
         private List<Material> materials;
         public List<Material> Materials
         {
@@ -168,8 +171,10 @@ namespace Draft.ViewModels
         public CustomCommand RemoveMaterial { get; set; }
         public CustomCommand Sortirovka { get; set; }
         public CustomCommand EditMinCount { get; set; }
+        public CustomCommand WriteIn { get; set; }
 
         List<Material> searchResult;
+
         int paginationPageIndex = 0;
         private string searchCountRows;
         private string selectedViewCountRows;
@@ -289,6 +294,7 @@ namespace Draft.ViewModels
                 InitPagination();
                 Pagination();
             });
+
 
             EditMaterial = new CustomCommand(() =>
             {

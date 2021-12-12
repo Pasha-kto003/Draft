@@ -36,21 +36,21 @@
                 <Label Content="Поиск:"/>
                 <Label Grid.Column="1" Content="Критерий поиска:"/>
                 <TextBox Width="200" Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-                <ComboBox Width="200" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding SearchType}" SelectedItem="{Binding SelectedSearchType}"/>
+                <ComboBox IsEditable="True" Width="200" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding SearchType}" SelectedItem="{Binding SelectedSearchType}"/>
             </Grid>
             <StackPanel Grid.Column="1" HorizontalAlignment="Left">
                 <Label Content="Фильтрация по типу"/>
-                <ComboBox Width="200" DisplayMemberPath="Title" ItemsSource="{Binding MaterialTypeFilter}" SelectedItem="{Binding SelectedMaterialTypeFilter}"/>
+                <ComboBox IsEditable="True" Width="200" DisplayMemberPath="Title" ItemsSource="{Binding MaterialTypeFilter}" SelectedItem="{Binding SelectedMaterialTypeFilter}"/>
             </StackPanel>
             <StackPanel Grid.Column="2">
                 <Label Content="Сортировка по типу"/>
                 <!--<Button Command="{Binding Sortirovka}" Content="Сортировать"/>-->
-                <ComboBox Width="200" ItemsSource="{Binding SortType}" SelectedItem="{Binding SelectedSortType}"/>
+                <ComboBox IsEditable="True" Width="200" ItemsSource="{Binding SortType}" SelectedItem="{Binding SelectedSortType}"/>
             </StackPanel>
             <StackPanel Grid.Column="3">
                 <Label Content="Сортировка по типу"/>
                 <!--<Button Command="{Binding Sortirovka}" Content="Сортировать"/>-->
-                <ComboBox Width="200" ItemsSource="{Binding OrderType}" SelectedItem="{Binding SelectedOrderType}"/>
+                <ComboBox IsEditable="True" Width="200" ItemsSource="{Binding OrderType}" SelectedItem="{Binding SelectedOrderType}"/>
             </StackPanel>
         </Grid>
         <ListBox SelectionMode="Extended" x:Name="list" Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
@@ -96,8 +96,7 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <Button Content="Изменить материал" Command="{Binding EditMaterial}"/>
-                    <MenuItem Header="Изменить материал" Command="{Binding EditMaterial}"/>
+                    <Button Content="Изменить материал" Command="{Binding EditMaterial}" Background="Transparent" BorderBrush="Transparent"/>
                     <MenuItem Header="Изменить Минимальное значение выбранных материалов" Click="MenuItem_Click"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
@@ -105,15 +104,14 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Label Content="{Binding SearchCountRows}"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="&lt;" Width="20" Command="{Binding BackPage}"/>
+                <Button Content="&lt;" Width="20" Command="{Binding BackPage}" BorderBrush="Transparent" Background="White"/>
                 <Label Content="{Binding Pages}"/>
-                <Button Content=">" Width="20" Command="{Binding ForwardPage}"/>
+                <Button Content=">" Width="20" Command="{Binding ForwardPage}" BorderBrush="Transparent" Background="White"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
                 <Label Content="Кол-во записей на странице:"/>
-                <ComboBox Width="200" ItemsSource="{Binding ViewCountRows}" SelectedItem="{Binding SelectedViewCountRows}"/>
+                <ComboBox IsEditable="True" Width="200" ItemsSource="{Binding ViewCountRows}" SelectedItem="{Binding SelectedViewCountRows}"/>
                 <Button Content="Добавить материал" Command="{Binding AddMaterial}"/>
-
             </StackPanel>
         </StackPanel>
 

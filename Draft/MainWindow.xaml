@@ -23,11 +23,7 @@
             </Grid.RowDefinitions>
             <Image Grid.RowSpan="2" Width="100"/>
             <Label Grid.Column="1" Grid.RowSpan="2" FontSize="50" Foreground="{StaticResource Attention}" Content="Черновик"/>
-            <Label Content="Навигация" VerticalAlignment="Bottom" Grid.Column="2"/>
-            <StackPanel  Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                <Button Content="Назад" Click="BackPage"/>
-                <Button Content="Вперед" Click="ForwardPage"/>
-            </StackPanel>
+
         </Grid>
         <Frame Name="mainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" />
     </Grid>

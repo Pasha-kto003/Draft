@@ -100,16 +100,5 @@ namespace Draft
             window.mainFrame.Navigate(page);
         }
 
-        private void BackPage(object sender, RoutedEventArgs e)
-        {
-            if (mainFrame.CanGoBack)
-                mainFrame.GoBack();
-        }
-
-        private void ForwardPage(object sender, RoutedEventArgs e)
-        {
-            if (mainFrame.CanGoForward)
-                mainFrame.GoForward();
-        }
     }
 }

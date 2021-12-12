@@ -68,13 +68,15 @@ namespace Draft.ViewModels
         public List<ProductMaterial> ProductMaterials;
         public List<MaterialCountHistory> MaterialCountHistorys;
         public List<Supplier> Suppliers;
+        public List<Material> Materials;
 
         public CustomCommand SelectImage { get; set; }
         public CustomCommand RemoveSupplier { get; set; }
         public CustomCommand AddSupplier { get; set; }
         public CustomCommand Save { get; set; }
         public CustomCommand RemoveMaterial { get; set; }
-        public CustomCommand CountSum { get; set; }
+        public CustomCommand Searching { get; set; }
+        public CustomCommand WriteIn { get; set; }
 
         private string searchText = "";
         public string SearchText
@@ -83,9 +85,9 @@ namespace Draft.ViewModels
             set
             {
                 searchText = value;
-                Search();
             }
         }
+        string path = @"\NewDoc";
 
         public AddMaterial(Material material)
         {
@@ -145,6 +147,8 @@ namespace Draft.ViewModels
                     SelectedMaterialSuppliers = new ObservableCollection<Supplier>(material.Supplier);
                 }
             }
+
+            
 
             RemoveMaterial = new CustomCommand(() =>
             {
@@ -220,6 +224,18 @@ namespace Draft.ViewModels
                     }
                 }
                 else return;
+            });
+
+            Searching = new CustomCommand(() =>
+            {
+                var search = SearchText.ToLower();
+                foreach (var sup in SelectedMaterialSuppliers)
+                {
+                    if (sup.Title.Equals(search, StringComparison.OrdinalIgnoreCase))
+                    {
+                        SelectedMaterialSuppliers.Add(sup);
+                    }
+                }
             });
             SelectedMaterialType = AddMaterialVM.MaterialType;
             string directory = Environment.CurrentDirectory;
@@ -304,22 +320,22 @@ namespace Draft.ViewModels
                 {
                     if (AddMaterialVM.CountInPack < 0)
                     {
-                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        MessageBox.Show("Запрещается вводить отрицательные числа в упокавку");
                         return;
                     }
                     else if (AddMaterialVM.CountInStock < 0)
                     {
-                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        MessageBox.Show("Запрещается вводить отрицательные числа на склад");
                         return;
                     }
                     else if (AddMaterialVM.Cost < 0)
                     {
-                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        MessageBox.Show("Запрещается вводить отрицательные числа в цену материала");
                         return;
                     }
                     else if (AddMaterialVM.MinCount < 0)
                     {
-                        MessageBox.Show("Запрещается вводить отрицательные числа");
+                        MessageBox.Show("Запрещается вводить отрицательные числа в минимальное число материала");
                         return;
                     }
                     AddMaterialVM.Supplier = SelectedMaterialSuppliers;
@@ -347,6 +363,8 @@ namespace Draft.ViewModels
                 {
                     MessageBox.Show(e.Message);
                 };
+
+                
             });
 
             searchResult = connection.Supplier.ToList();
@@ -360,12 +378,6 @@ namespace Draft.ViewModels
             img.UriSource = new Uri(url, UriKind.Absolute);
             img.EndInit();
             return img;
-        }
-
-        private void Search()
-        {
-            var search = SearchText.ToLower();
-            searchResult = SelectedMaterialSuppliers.Where(c => c.Title.ToLower().Contains(search)).ToList();
         }
 
         public void CloseModalWindow(object obj)
