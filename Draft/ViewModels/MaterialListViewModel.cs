@@ -12,7 +12,7 @@ namespace Draft.ViewModels
 {
     public class MaterialListViewModel : BaseViewModel
     {
-        string path = @"\NewDoc";
+
         private List<Material> materials;
         public List<Material> Materials
         {
@@ -222,7 +222,7 @@ namespace Draft.ViewModels
             selectedMaterialTypeFilter = MaterialTypeFilter.Last();
 
             SortType = new List<string>();
-            SortType.AddRange(new string[] { "Наименование", "Количество на складе", "Отмена", "Стоимость", "Остаток" });
+            SortType.AddRange(new string[] { "Наименование", "Отмена", "Стоимость", "Остаток" });
             selectedSortType = SortType.First();
 
             OrderType = new List<string>();
@@ -334,7 +334,7 @@ namespace Draft.ViewModels
                 SignalChanged("Materials");
                 int.TryParse(SelectedViewCountRows, out rows);
                 CountPages = searchResult.Count() / rows;
-                Pages = $"{paginationPageIndex + 1}/{CountPages + 1}";
+                Pages = $"{paginationPageIndex + 1} из {CountPages + 1}";
             }
         }
 
@@ -400,6 +400,7 @@ namespace Draft.ViewModels
         internal void Sort()
         {
             if (SelectedOrderType == "По умолчанию")
+                
                 return;
 
             if (SelectedOrderType == "По убыванию")

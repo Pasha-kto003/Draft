@@ -43,7 +43,7 @@
                 <ComboBox IsEditable="True" Width="200" DisplayMemberPath="Title" ItemsSource="{Binding MaterialTypeFilter}" SelectedItem="{Binding SelectedMaterialTypeFilter}"/>
             </StackPanel>
             <StackPanel Grid.Column="2">
-                <Label Content="Сортировка по типу"/>
+                <Label Content="Выбор сортирвки"/>
                 <!--<Button Command="{Binding Sortirovka}" Content="Сортировать"/>-->
                 <ComboBox IsEditable="True" Width="200" ItemsSource="{Binding SortType}" SelectedItem="{Binding SelectedSortType}"/>
             </StackPanel>
@@ -55,7 +55,7 @@
         </Grid>
         <ListBox SelectionMode="Extended" x:Name="list" Grid.Row="1" ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalContentAlignment="Stretch" >
             <ListBox.ItemTemplate>
-                <DataTemplate >
+                <DataTemplate>
                     <Grid Background="{Binding ColorForXaml}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>

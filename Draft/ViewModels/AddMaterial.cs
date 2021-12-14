@@ -86,8 +86,7 @@ namespace Draft.ViewModels
             {
                 searchText = value;
             }
-        }
-        string path = @"\NewDoc";
+        }     
 
         public AddMaterial(Material material)
         {

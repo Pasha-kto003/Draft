@@ -20,8 +20,7 @@
         </Grid.RowDefinitions>
         <StackPanel DataContext="{Binding AddMaterialVM}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <StackPanel HorizontalAlignment="Left">
-                <Label Content="Номер материала"/>
-               
+
                 <Label Content="Наименование:" />
                 <TextBox Text="{Binding Title}"/>
 
@@ -31,7 +30,6 @@
                 <TextBox Text="{Binding Unit}"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <Label Content="{Binding ID}" HorizontalAlignment="Stretch"/>
                 <Label Content="Количество в упаковке:"/>
                 <TextBox Text="{Binding CountInPack}"/>
                 <Label Content="Минимальное количество:"/>
