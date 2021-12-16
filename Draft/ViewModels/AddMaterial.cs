@@ -1,4 +1,5 @@
 ﻿using Draft.db;
+using Draft.View;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,8 @@ namespace Draft.ViewModels
         public CustomCommand RemoveMaterial { get; set; }
         public CustomCommand Searching { get; set; }
         public CustomCommand WriteIn { get; set; }
+        public CustomCommand NewSupplier { get; set; }
+        public CustomCommand EditSupplier { get; set; }
 
         private string searchText = "";
         public string SearchText
@@ -143,16 +146,27 @@ namespace Draft.ViewModels
                 }
             }
 
-            
+            NewSupplier = new CustomCommand(() =>
+            {
+                AddSupplierView window = new AddSupplierView();
+                window.ShowDialog();
+            });
+
+            EditSupplier = new CustomCommand(() =>
+            {
+                if (SelectedSupplier == null) return;
+                AddSupplierView window = new AddSupplierView(SelectedSupplier);
+                window.ShowDialog();
+            });
 
             RemoveMaterial = new CustomCommand(() =>
             {
                 if (material.ID == 0)
                 {
-                    MessageBox.Show("Текущая запись не создана", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Такой записи не существует", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить материал?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить материал?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     ProductMaterials = new List<ProductMaterial>(connection.ProductMaterial);
@@ -254,8 +268,6 @@ namespace Draft.ViewModels
                     }
                 }
             });
-
-
 
             AddSupplier = new CustomCommand(() =>
             {

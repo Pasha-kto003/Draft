@@ -121,9 +121,13 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddMaterial.cs" />
+    <Compile Include="ViewModels\AddSupplier.cs" />
     <Compile Include="ViewModels\EditCountViewModel.cs" />
     <Compile Include="View\AddMaterialView.xaml.cs">
       <DependentUpon>AddMaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddSupplierView.xaml.cs">
+      <DependentUpon>AddSupplierView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditCount.xaml.cs">
       <DependentUpon>EditCount.xaml</DependentUpon>
@@ -146,6 +150,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AddMaterialView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddSupplierView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
