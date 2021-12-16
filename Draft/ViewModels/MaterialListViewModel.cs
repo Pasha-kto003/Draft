@@ -169,7 +169,6 @@ namespace Draft.ViewModels
         public CustomCommand AddMaterial { get; set; }
         public CustomCommand EditMaterial { get; set; }
         public CustomCommand RemoveMaterial { get; set; }
-        public CustomCommand Sortirovka { get; set; }
         public CustomCommand EditMinCount { get; set; }
         public CustomCommand WriteIn { get; set; }
 
@@ -246,14 +245,11 @@ namespace Draft.ViewModels
                 }
                 
                 foreach (var suplier in material.Supplier)
-                {
-                   
+                {               
                     if (suplier != material.Supplier.Last())
                         material.SrtingSupplier += $"{suplier.Title}, ";
                     material.SrtingSupplier += $"{suplier.Title}";
-                }
-
-                
+                }             
             }
 
             BackPage = new CustomCommand(() => {
@@ -305,10 +301,7 @@ namespace Draft.ViewModels
                 InitPagination();
                 Pagination();
             });
-            Sortirovka = new CustomCommand(() =>
-            {
-                Sort();
-            });
+
             searchResult = DBInstance.Get().Material.ToList();
             InitPagination();
             Pagination();
@@ -424,7 +417,6 @@ namespace Draft.ViewModels
             }
             paginationPageIndex = 0;
             Pagination();
-
         }
     }
 }
