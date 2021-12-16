@@ -119,11 +119,7 @@ namespace Draft.ViewModels
                     Image = material.Image,
                     Description = material.Description,
                     Unit = material.Unit,
-
                 };
-
-                
-
 
                 if (material.CountInStock < material.MinCount)
                 {
@@ -259,22 +255,6 @@ namespace Draft.ViewModels
                 }
             });
 
-
-            //CountSum = new CustomCommand(() =>
-            //{
-            //    if(material.CountInStock < material.MinCount)
-            //    {
-            //        int a = (Int32)material.MinCount - (Int32)material.CountInStock;
-            //        if (a < 0)
-            //            return;
-            //        else
-            //        {
-            //            int b = a * (Int32)material.Cost / (Int32)material.CountInPack;
-            //            CountPart = b;
-            //        }
-            //    }
-            //});
-            
 
 
             AddSupplier = new CustomCommand(() =>
