@@ -154,8 +154,8 @@ namespace Draft.ViewModels
 
             EditSupplier = new CustomCommand(() =>
             {
-                if (SelectedSupplier == null) return;
-                AddSupplierView window = new AddSupplierView(SelectedSupplier);
+                if (SelectedMaterialSupplier == null) return;
+                AddSupplierView window = new AddSupplierView(SelectedMaterialSupplier);
                 window.ShowDialog();
             });
 
