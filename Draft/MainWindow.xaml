@@ -21,7 +21,7 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Image Grid.RowSpan="2" Width="100"/>
+            <Image Grid.RowSpan="2" Width="80" Source="materials\Черновик.png"/>
             <Label Grid.Column="1" Grid.RowSpan="2" FontSize="50" Foreground="{StaticResource Attention}" Content="Черновик"/>
 
         </Grid>
