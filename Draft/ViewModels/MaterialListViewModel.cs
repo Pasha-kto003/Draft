@@ -268,6 +268,7 @@ namespace Draft.ViewModels
                 if (rowsOnPage == 0)
                     return;
                 int countPage = searchResult.Count() / rowsOnPage;
+                CountPages = countPage;
                 if (searchResult.Count() % rowsOnPage != 0)
                     countPage++;
                 if (countPage > paginationPageIndex + 1)

@@ -247,6 +247,7 @@ namespace Draft.ViewModels
                 }
             });
             SelectedMaterialType = AddMaterialVM.MaterialType;
+
             string directory = Environment.CurrentDirectory;
             ImageMaterial = GetImageFromPath(directory.Substring(0, directory.Length - 10) + "\\" + AddMaterialVM.Image);
             SelectImage = new CustomCommand(() =>
