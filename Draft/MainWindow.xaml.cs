@@ -36,10 +36,10 @@ namespace Draft
             //var materials = connection.Material.ToList();
             //var materialsType = connection.MaterialType.ToList();
             //var materialsInStock = connection.MaterialCountHistory.ToList();
-            ////connection.MaterialType.Add(new MaterialType { Title = "Рулон" });
-            ////connection.MaterialType.Add(new MaterialType { Title = "Гранулы" });
-            ////connection.MaterialType.Add(new MaterialType { Title = "Нарезка" });
-            ////connection.MaterialType.Add(new MaterialType { Title = "Пресс" });
+            //connection.MaterialType.Add(new MaterialType { Title = "Рулон" });
+            //connection.MaterialType.Add(new MaterialType { Title = "Гранулы" });
+            //connection.MaterialType.Add(new MaterialType { Title = "Нарезка" });
+            //connection.MaterialType.Add(new MaterialType { Title = "Пресс" });
 
             //for (int i = 1; i < rows.Length; i++)
             //{
@@ -60,7 +60,7 @@ namespace Draft
             //}
             //connection.SaveChanges();
             //var connection = DBInstance.Get();
-            //string path = @"C:\Users\79249\Desktop\Черновик\Сессия 1\supplier_b_import.txt";
+            //string path = @"C:\Users\79249\Desktop\Сессия 1\supplier_b_import.txt";
             //var rows = File.ReadAllLines(path);
             //var supplier = connection.Supplier.ToList();
 
@@ -79,20 +79,20 @@ namespace Draft
 
             //connection.SaveChanges();
 
-            var connection = DBInstance.Get();
-            string path = @"C:\Users\79249\Desktop\Черновик\Сессия 1\materialsupplier_b_import.csv";
-            var rows = File.ReadAllLines(path);
-            var supliers = connection.Supplier.ToList();
-            var materials = connection.Material.ToList();
+            //var connection = DBInstance.Get();
+            //string path = @"C:\Users\79249\Desktop\Сессия 1\materialsupplier_b_import.csv";
+            //var rows = File.ReadAllLines(path);
+            //var supliers = connection.Supplier.ToList();
+            //var materials = connection.Material.ToList();
 
-            for (int i = 1; i < rows.Length; i++)
-            {
-                var cols = rows[i].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                var material = materials.First(s => s.Title == cols[0]);
-                var suplier = supliers.First(s => s.Title == cols[1]);
-                suplier.Material.Add(material);
-            }
-            connection.SaveChanges();
+            //for (int i = 1; i < rows.Length; i++)
+            //{
+            //    var cols = rows[i].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            //    var material = materials.First(s => s.Title == cols[0]);
+            //    var suplier = supliers.First(s => s.Title == cols[1]);
+            //    suplier.Material.Add(material);
+            //}
+            //connection.SaveChanges();
         }
 
         public static void Navigate(Page page)

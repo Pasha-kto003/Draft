@@ -393,8 +393,7 @@ namespace Draft.ViewModels
         }
         internal void Sort()
         {
-            if (SelectedOrderType == "По умолчанию")
-                
+            if (SelectedOrderType == "По умолчанию")           
                 return;
 
             if (SelectedOrderType == "По убыванию")
