@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Draft.db
 {
-    public class DBInstance
+    public static class DBInstance
     {
         static test_DBEntities connection;
         static object objectLock = new object();
